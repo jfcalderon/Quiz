@@ -1,4 +1,11 @@
 <p><input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" /></p>
 <p><input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" /></p>
+<p><select name="quiz[tema]" id="tema">
+ <option value="otro" <% if(quiz.tema === 'otro') { %> selected <% } %> >Otro</option>
+ <option value="humanidades" <% if(quiz.tema === 'humanidades') { %> selected <% } %> >Humanidades</option>
+ <option value="ocio" <% if(quiz.tema === 'ocio') { %> selected <% } %> >Ocio</option>
+ <option value="ciencia" <% if(quiz.tema === 'ciencia') { %> selected <% } %> >Ciencia</option>
+ <option value="tecnologia" <% if(quiz.tema === 'tecnologia') { %> selected <% } %> >Tecnología</option>
+</select></p>
 <p><a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar"></p>

@@ -2,6 +2,6 @@ body                  {background: #333;}
 
 #page-wrap:after      {content: "Smartphone Layout";}
 
-h2 span, section h3     {display: none;}
-body                    {font-size: xx-large;}
-footer, input, button   {font-size: large;}
+h2 span, section h3             {display: none;}
+body                            {font-size: xx-large;}
+footer, input, button, select   {font-size: large;}
