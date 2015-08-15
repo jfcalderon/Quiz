@@ -14,7 +14,28 @@ exports.load = function(req, res, next, quizId){
 
 // GET /quizes
 exports.index = function(req, res){
-  models.Quiz.findAll().then(function(quizes){
+  var quizElements;
+
+  if(req.query.search)
+  {
+    // - Considero sólo las palabras, considerando también números (primero sustituyo las
+    //   "no palabras" en espacios y posteriormente los grupos de espacios en '%')
+    // Paso el texto a minúsculas y comparo en BD en minúsculas para hacer más efectiva la búsqueda.
+    var texto = ' ' + req.query.search + ' '; // añado ' ' que serán sustituidos por '%'
+    var texto = texto.replace(/[^(\w+)]/g, ' ').replace(/(\s+)/g, '%').toLowerCase();
+  } else texto = '%';
+
+  // Considero que sólo buscaremos cuando se indique al menos una palabra válida en
+  // el filtro de búsqueda
+  if(texto !== '%')
+  {
+    quizElements = models.Quiz.findAll({where: ["lower(pregunta) like ?", texto],
+                                        order: 'pregunta'});
+  } else {
+    quizElements = models.Quiz.findAll();
+  }
+
+  quizElements.then(function(quizes){
     res.render('quizes/index.ejs', {quizes: quizes, errors: []});
   }).catch(function(error){next(error)});
 };
