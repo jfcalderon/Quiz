@@ -43,3 +43,22 @@ exports.destroy = function(req, res){
   delete req.session.user;
   res.redirect(req.session.redir.toString()); // redirección al path anterior al login
 };
+
+// auto-logout
+exports.autologout = function(req, res, next){
+    if(req.session.user){
+        if(req.session.ultimaconexion){
+          var ahora = new Date().getTime();
+          if(ahora - req.session.ultimaconexion > 120000){
+            delete req.session.user;
+            delete req.session.ultimaconexion;
+            res.redirect('/login');
+            return;
+          }
+        }
+        req.session.ultimaconexion = new Date().getTime();
+        next();
+    } else {
+        next();
+    }
+};
